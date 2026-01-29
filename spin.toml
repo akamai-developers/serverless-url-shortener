@@ -1,0 +1,22 @@
+#:schema https://schemas.spinframework.dev/spin/manifest-v2/latest.json
+
+spin_manifest_version = 2
+
+[application]
+name = "hello-wasm-functions"
+version = "0.1.0"
+authors = ["Thorsten Hans <thans@akamai.com>"]
+description = ""
+
+[[trigger.http]]
+route = "/..."
+component = "hello-wasm-functions"
+
+[component.hello-wasm-functions]
+source = "target/wasm32-wasip1/release/hello_wasm_functions.wasm"
+allowed_outbound_hosts = []
+key_value_stores = ["default"]
+
+[component.hello-wasm-functions.build]
+command = "cargo build --target wasm32-wasip1 --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
