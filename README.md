@@ -1,6 +1,6 @@
 # Serverless URL Shortener
 
-This is a simple serverless URL shortener. It serves as an example for teaching developers how to build their first serverless function based on WebAssembly using [the CNCF project Spin](https://spinframework.dev).
+This is a simple serverless URL shortener. It serves as an example for teaching developers how to build their first serverless function based on WebAssembly using [the CNCF project Spin](https://spinframework.dev) and run it on Akamai Functions.
 
 ## What you need on your machine
 
