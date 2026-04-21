@@ -15,7 +15,16 @@ fn handle_hello_wasm_functions(req: Request) -> Result<impl IntoResponse> {
     router.put("/_api/links/:short", update_link);
     router.delete("/_api/links/:short", remove_link);
     router.get("/_api/links", get_all_links);
+    router.get("/_api/links/:short/available", check_availability);
+    router.get("/", redirect_to_app);
     Ok(router.handle(req))
+}
+
+fn redirect_to_app(_req: Request, _params: Params) -> Result<impl IntoResponse> {
+    Ok(ResponseBuilder::new(301)
+        .header("Location", "/app")
+        .body(())
+        .build())
 }
 
 fn get_all_links(_req: Request, _params: Params) -> Result<impl IntoResponse> {
@@ -33,6 +42,20 @@ fn get_all_links(_req: Request, _params: Params) -> Result<impl IntoResponse> {
         }
     }
     let payload = serde_json::to_vec(&all).expect("Error while serializing stats into JSON");
+    Ok(ResponseBuilder::new(200)
+        .header("content-type", "application/json")
+        .body(payload)
+        .build())
+}
+
+fn check_availability(_req: Request, params: Params) -> Result<impl IntoResponse> {
+    let Some(short) = params.get("short") else {
+        return Ok(Response::new(400, "Bad Request"));
+    };
+    let store = Store::open_default().expect("Could not connect to key value store");
+    let exists = store.exists(short).unwrap_or(false);
+    let available = !exists;
+    let payload = format!("{{\"available\":{}}}", available);
     Ok(ResponseBuilder::new(200)
         .header("content-type", "application/json")
         .body(payload)
@@ -92,7 +115,6 @@ fn try_follow_link(_req: Request, params: Params) -> Result<impl IntoResponse> {
         Some(mut model) => {
             model.hits = Some(model.hits.unwrap_or_default() + 1);
             _ = store.set_json(model.short.clone(), &model);
-
             model.into_response()
         }
         None => Response::new(404, "Not Found"),

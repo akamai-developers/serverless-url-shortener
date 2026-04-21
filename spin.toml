@@ -3,20 +3,34 @@
 spin_manifest_version = 2
 
 [application]
-name = "hello-wasm-functions"
+name = "serverless-url-shortener"
 version = "0.1.0"
 authors = ["Thorsten Hans <thans@akamai.com>"]
-description = ""
+description = "A Wasm-Based Serverless URL Shortener"
 
 [[trigger.http]]
 route = "/..."
-component = "hello-wasm-functions"
+component = "api"
 
-[component.hello-wasm-functions]
-source = "target/wasm32-wasip1/release/hello_wasm_functions.wasm"
+[component.api]
+source = "api/target/wasm32-wasip2/release/api.wasm"
 allowed_outbound_hosts = []
 key_value_stores = ["default"]
 
-[component.hello-wasm-functions.build]
-command = "cargo build --target wasm32-wasip1 --release"
+[component.api.build]
+command = "cargo build --target wasm32-wasip2 --release"
+workdir = "api"
 watch = ["src/**/*.rs", "Cargo.toml"]
+
+[[trigger.http]]
+route = "/app/..."
+component = "frontend"
+
+[component.frontend]
+source = { url = "https://github.com/spinframework/spin-fileserver/releases/download/v0.3.0/spin_static_fs.wasm", digest = "sha256:ef88708817e107bf49985c7cefe4dd1f199bf26f6727819183d5c996baa3d148" }
+files = [{ source = "frontend/dist", destination = "/" }]
+environment = { FALLBACK_PATH = "index.html" }
+
+[component.frontend.build]
+workdir = "frontend"
+command = ["npm install", "npm run build"]

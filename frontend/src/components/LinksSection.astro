@@ -1,0 +1,62 @@
+---
+// LinksSection — card displaying the full table of short links with loading/empty/error states
+---
+<section class="card links-card" aria-labelledby="links-heading">
+  <div class="links-header">
+    <h2 id="links-heading" class="card-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      Your Links
+    </h2>
+    <span id="link-count" class="link-count" aria-live="polite"></span>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading-state" class="state-box" aria-label="Loading links" role="status">
+    <div class="spinner"></div>
+    <p>Loading links&hellip;</p>
+  </div>
+
+  <!-- EMPTY -->
+  <div id="empty-state" class="state-box" hidden>
+    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      <line x1="2" y1="2" x2="22" y2="22"/>
+    </svg>
+    <p class="empty-title">No links yet</p>
+    <p class="empty-subtitle">Add your first short link above to get started.</p>
+  </div>
+
+  <!-- ERROR -->
+  <div id="error-state" class="state-box" hidden>
+    <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8"  x2="12"   y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <p class="empty-title">Failed to load links</p>
+    <p class="empty-subtitle" id="error-message"></p>
+    <button id="retry-btn" class="btn btn-ghost">Retry</button>
+  </div>
+
+  <!-- TABLE -->
+  <div id="table-wrapper" class="table-wrapper" hidden>
+    <table class="links-table" aria-label="Shortened links">
+      <thead>
+        <tr>
+          <th scope="col">Short</th>
+          <th scope="col">Destination</th>
+          <th scope="col" class="col-hits">Hits</th>
+          <th scope="col" class="col-actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="links-tbody"></tbody>
+    </table>
+  </div>
+</section>

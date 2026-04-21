@@ -1,0 +1,33 @@
+---
+import Layout       from "../layouts/Layout.astro";
+import AppHeader    from "../components/AppHeader.astro";
+import AppFooter    from "../components/AppFooter.astro";
+import ToastContainer from "../components/ToastContainer.astro";
+import EditModal    from "../components/EditModal.astro";
+import AddLinkForm  from "../components/AddLinkForm.astro";
+import LinksSection from "../components/LinksSection.astro";
+---
+<Layout title="Serverless URL Shortener">
+
+  <ToastContainer />
+  <EditModal />
+
+  <div class="app">
+    <AppHeader />
+
+    <main class="app-main">
+      <div class="container">
+        <AddLinkForm />
+        <LinksSection />
+      </div>
+    </main>
+
+    <AppFooter />
+  </div>
+
+  <script>
+    import { initApp } from "../scripts/app.ts";
+    initApp();
+  </script>
+
+</Layout>

@@ -1,0 +1,53 @@
+---
+// AddLinkForm — stacked-row form to create a new short link
+---
+<section class="card form-card" aria-labelledby="form-heading">
+  <h2 id="form-heading" class="card-title">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5"  y1="12" x2="19" y2="12"/>
+    </svg>
+    Add New Link
+  </h2>
+  <form id="add-form" novalidate>
+    <div class="form-group">
+      <label for="input-short">Short code</label>
+      <div class="input-with-status">
+        <input
+          id="input-short"
+          type="text"
+          placeholder="e.g. gh"
+          pattern="[A-Za-z0-9_-]+"
+          autocomplete="off"
+          spellcheck="false"
+          required
+        />
+        <span id="short-status" class="short-status" aria-live="polite"></span>
+      </div>
+      <span class="field-hint">Letters, numbers, hyphens, underscores</span>
+      <span id="short-feedback" class="field-feedback" aria-live="polite"></span>
+    </div>
+    <div class="form-group">
+      <label for="input-url">Destination URL</label>
+      <input
+        id="input-url"
+        type="url"
+        placeholder="https://example.com/long/path"
+        autocomplete="off"
+        required
+      />
+      <span id="url-feedback" class="field-feedback" aria-live="polite"></span>
+    </div>
+    <div class="form-actions">
+      <button type="submit" id="add-btn" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5"  y1="12" x2="19" y2="12"/>
+        </svg>
+        Add Link
+      </button>
+    </div>
+  </form>
+</section>

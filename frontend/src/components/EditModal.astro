@@ -1,0 +1,18 @@
+---
+// EditModal — accessible dialog for editing the destination URL of a link
+---
+<div id="edit-modal" class="modal-overlay" role="dialog" aria-modal="true"
+     aria-labelledby="modal-title" hidden>
+  <div class="modal">
+    <h2 id="modal-title">Edit Link</h2>
+    <p class="modal-short-label">
+      Short code: <strong id="modal-short-display"></strong>
+    </p>
+    <label for="modal-url">Destination URL</label>
+    <input id="modal-url" type="url" placeholder="https://example.com" autocomplete="off" />
+    <div class="modal-actions">
+      <button id="modal-save"   class="btn btn-primary">Save</button>
+      <button id="modal-cancel" class="btn btn-ghost">Cancel</button>
+    </div>
+  </div>
+</div>
